@@ -1,7 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import Sidebar from '../components/layout/Sidebar'
-import FollowBar from '../components/layout/FollowBar'
+import Sidebar from '@components/layout/Sidebar'
+import FollowBar from '@components/layout/FollowBar'
 
 
 export const metadata: Metadata = {
