@@ -1,7 +1,9 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import Layout from '@components/layout/Layout'
-import Modal from '@components/Modal'
+import Layout from '@app/components/layout/Layout'
+import LoginModal from '@app/components/modals/LoginModal'
+import RegisterModal from '@app/components/modals/RegisterModal'
+
 
 
 export const metadata: Metadata = {
@@ -12,8 +14,9 @@ export const metadata: Metadata = {
 export default function RootLayout() {
   return (
     <>
+      <RegisterModal />
+      <LoginModal />
       <Layout />    
     </>
-
   )
 }

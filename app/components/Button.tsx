@@ -1,11 +1,15 @@
+'use client';
+
 import React from "react";
+
+
 
 interface ButtonProps {
   label: string;
   secondary?: boolean;
   fullWidth?: boolean;
   large?: boolean;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   outline?: boolean;
 }
