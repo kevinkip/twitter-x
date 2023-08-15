@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 export default function RootLayout() {
   return (
     <>
-      <Modal actionLabel='Submit' isOpen title='Test Modal' />
       <Layout />    
     </>
 
