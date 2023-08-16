@@ -1,13 +1,19 @@
 'use client'
+import useLoginModal from '@app/hooks/useLoginModal';
 import { useRouter } from 'next/navigation';
-import React from 'react'
+import React, { useCallback } from 'react'
 import {FaFeather} from 'react-icons/fa'
 
 const SidebarTweetButton = () => {
     const router = useRouter();
+    const loginModal = useLoginModal()
+
+    const onClick = useCallback(() => {
+        loginModal.onOpen();
+    }, [loginModal])
 
   return (
-    <div onClick={() => router.push('/')}>
+    <div onClick={onClick}>
 
         {/* Only shows up when the screen is smaller than 1024px */}
         <div className="mt-6 lg:hidden rounded-full h-14 w-14 p-4 flex items-center justify-center bg-sky-500 hover:bg-opacity-80 transition cursor-pointer">

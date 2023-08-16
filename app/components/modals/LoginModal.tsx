@@ -1,13 +1,15 @@
 'use client'
+import useRegisterModal from '@app/hooks/useRegisterModal';
 import React, { useCallback, useState } from 'react'
 import useLoginModal from '../../hooks/useLoginModal';
-import Input from '../../../components/Input';
-import Modal from '../../../components/Modal';
+import Input from '../Input';
+import Modal from '../Modal';
+import RegisterModal from './RegisterModal';
 
 
 const LoginModal = () => {
     const loginModal = useLoginModal();
-
+    const registerModal = useRegisterModal();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -27,6 +29,11 @@ const LoginModal = () => {
         }
     }, [loginModal])
 
+    const onToggle = useCallback(() => {
+      loginModal.onClose();
+      registerModal.onOpen();
+    }, [loginModal, registerModal])
+
     const bodyContent = (
         <div className="flex flex-col gap-4">
           <Input 
@@ -45,6 +52,14 @@ const LoginModal = () => {
         </div>
       )
 
+      const footerContent = (
+        <div className="text-neutral-400 text-center mt-4">
+          <p>First time Twitter?
+            <span onClick={onToggle} className="text-white cursor-pointer hover:underline"> Create an account</span>
+          </p>
+        </div>
+      )
+
     return (
         <Modal 
             disabled={isLoading}
@@ -54,6 +69,7 @@ const LoginModal = () => {
             onClose={loginModal.onClose}
             onSubmit={onSubmit}
             body={bodyContent}
+            footer={footerContent}
         />
       );
     }
