@@ -1,7 +1,11 @@
-'use client'
-import React, { useCallback, useState } from 'react'
+
+import axios from 'axios';
+import { useCallback, useState } from 'react'
+import { toast } from 'react-hot-toast';
 import useLoginModal from '../../hooks/useLoginModal';
 import useRegisterModal from '../../hooks/useRegisterModal';
+import { signIn } from 'next-auth/react';
+
 import Input from '../Input';
 import Modal from '../Modal';
 
@@ -31,44 +35,60 @@ const RegisterModal = () => {
             setIsLoading(true);
 
             // TODO ADD LOG IN AND REGISTER
+            axios.post('/api/register', {
+              email,
+              name,
+              username,
+              password,
+            });
+
+            setIsLoading(false)
+
+            // after success, add toaster
+            toast.success('Account Created.')
+
+            signIn('credentials', {
+              email,
+              password,
+            })
 
             //close modal after submission
             registerModal.onClose();
         } catch (error) {
-            console.log(error)
+            toast.error('Something went wrong');
         } finally {
             setIsLoading(false);
         }
-    }, [registerModal])
+    }, [email, password, registerModal, username, name])
 
     const bodyContent = (
         <div className="flex flex-col gap-4">
           <Input 
+            disabled={isLoading}
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            disabled={isLoading}  
+            value={email}  
           />
           <Input 
             placeholder="Name"
+            disabled={isLoading}
             type="name"
             onChange={(e) => setName(e.target.value)}
-            value={name}
-            disabled={isLoading} 
+            value={name} 
           />
           <Input 
             placeholder="Username"
+            disabled={isLoading}
             type="username"
             onChange={(e) => setUsername(e.target.value)}
-            value={username}
-            disabled={isLoading} 
+            value={username} 
           />
           <Input 
             placeholder="Password"
+            disabled={isLoading}
             type="password"
             onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            disabled={isLoading} 
+            value={password} 
           />
         </div>
       )

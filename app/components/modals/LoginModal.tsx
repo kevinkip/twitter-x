@@ -1,15 +1,17 @@
 'use client'
 import useRegisterModal from '@app/hooks/useRegisterModal';
-import React, { useCallback, useState } from 'react'
 import useLoginModal from '../../hooks/useLoginModal';
+import React, { useCallback, useState } from 'react'
+
 import Input from '../Input';
 import Modal from '../Modal';
-import RegisterModal from './RegisterModal';
-
+import { signIn } from 'next-auth/react';
+import { toast } from 'react-hot-toast/headless';
 
 const LoginModal = () => {
     const loginModal = useLoginModal();
     const registerModal = useRegisterModal();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -19,15 +21,20 @@ const LoginModal = () => {
             setIsLoading(true);
 
             // TODO ADD LOG IN
+            await signIn('credentials', {
+              email,
+              password,
+            });
 
+            toast.success('Logged in')
             //close modal after submission
             loginModal.onClose();
         } catch (error) {
-            console.log(error)
+            toast.error('Something went wrong')
         } finally {
             setIsLoading(false);
         }
-    }, [loginModal])
+    }, [email, password, loginModal])
 
     const onToggle = useCallback(() => {
       loginModal.onClose();
